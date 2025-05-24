@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="main" style="width: 1000px;height:750px;"></div>
+
+  <script src="./echarts.js"></script>
+  <script>
+    const myChart = echarts.init(document.getElementById('main'));
+    const randomData = () => {
+      now = new Date(+now + oneDay);
+      value = value + Math.random() * 21 - 10;
+      return {
+        name: now.toString(),
+        value: [[now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'), Math.round(value)]
+      }
+    }
+    let data = []
+    let now = new Date(2025, 9, 3);
+    let oneDay = 24 * 3600 * 1000;
+    let value = Math.random() * 1000;
+    for(let i = 0; i < 1000; i++){
+      data.push(randomData())
+    }
+    const options = {
+      title: {
+        text: '动态数据时间坐标轴',
+        left: 'center',
+        top: '5%',
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params){
+          params = params[0]
+          let date =new Date(params.name)
+          return (`${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}<br/>${params.value[1]}元`)
+        }
+      },
+      axisPointer: {
+        animation: false
+      },
+      xAxis: {
+        type: 'time',
+        splitLine: {
+          show: false
+        },
+        axisLabel: {
+          formatter: '{yyyy}-{MM}-{dd}' 
+          // formatter: function (value){
+          //   const date = new Date(value)
+          //   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+          // }
+        }
+      },
+      yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        splitLine: {
+          show: false
+        }
+      },
+      series: [
+        {
+          name: '随机数据',
+          type: 'line',
+          showSymbol: false,
+          hoverAnimation: false,
+          data: data,
+        }
+      ]
+    }
+
+    setInterval(function () {
+      for (let i = 0; i< 5; i++){
+        data.shift();
+        data.push(randomData());
+      }
+      myChart.setOption({
+        series: [{
+          data: data
+        }]
+      });
+    }, 1000);
+    
+    myChart.setOption(options);
+  </script>
+</body>
+</html>

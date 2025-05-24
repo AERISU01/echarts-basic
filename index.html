@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="main" style="width: 1000px;height:750px;"></div>
+
+  <script src="./echarts.js"></script>
+  <script>
+    const myChart = echarts.init(document.getElementById('main'));
+    const options = {}
+    
+    myChart.setOption(options);
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="main" style="width: 1000px;height:750px;"></div>
+
+  <script src="./echarts.js"></script>
+  <script>
+    const myChart = echarts.init(document.getElementById('main'));
+    const options = {
+      title: {
+        text: '垂直折线图',
+        color: '#1e90ff'
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: 'Temperature: <br/>{c}km : {b}°C',
+        axisPointer: {
+          type: 'line',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      legend: {
+        data: ['Temperature (km) vs. temperature (°C)']
+      },
+      xAxis: {
+        type: 'value',
+        axisLabel: {
+          formatter: '{value} km'
+        },
+        boundaryGap: true, 
+        
+      },
+      yAxis: {
+        type: 'category',
+        axisLine: {
+          onZero: false
+        },
+        axisLabel: {
+          formatter: '{value} °C'
+        },
+        boundaryGap: true, // 
+        data: ['0', '20', '40', '60', '80', '100'], // 这里是y轴的值
+      },
+      series:{
+        name: 'Temperature (km) vs. temperature (°C)',
+        type: 'line',
+        data: [15, -50, -56.6, -70, -8.6, -90],
+        smooth: true, 
+        Symbol: 'circle', // 圆形标记
+        symbolSize: 10, // 圆形标记大小
+        lineStyle: {
+          color: '#1e90ff',
+          width: 2,
+          type: 'dashed', // 虚线
+        },
+      }
+      
+
+    }
+    
+    myChart.setOption(options);
+  </script>
+</body>
+</html>

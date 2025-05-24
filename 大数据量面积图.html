@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="main" style="width: 1000px;height:750px;"></div>
+
+  <script src="./echarts.js"></script>
+  <script>
+    const myChart = echarts.init(document.getElementById('main'));
+
+    let base = +new Date(2025, 9, 3);
+    let oneDay = 24 * 3600 * 1000;
+    let date = [];
+    let data = [Math.random() * 300];
+    for (let i = 0; i < 20000; i++) {
+      let now = new Date((base += oneDay));
+      date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+      data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+    }
+    const options = {
+      title: {
+        text: '大数据量面极图',
+        left: 'center',
+        // bottom: '5%',
+        top: '5%',
+      },
+      tooltip: {
+        trigger: 'axis',
+        position: function (pt) {
+          return [pt[0], '10%'];
+        }
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {
+            name: '折线图',
+            title: '保存为图片',
+            type: 'png',
+            iconStyle: {
+              borderColor: '#1e90ff'
+            }
+          }
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        top: '10%',
+        containLabel: true
+      },
+      legend: {
+        data: ['随机数据'],
+        right: '10%',
+        top: '5%',
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date,
+      },
+      yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 10,
+        },
+        {
+          type: 'slider',
+          start: 0,
+          end: 10,
+          bottom: '10%',
+        }
+      ],
+      series: [{
+        name: '随机数据',
+        type: 'line',
+        smooth: true,
+        symbol: 'none',
+        sampling: 'average',
+        lineStyle: {
+          color: 'rgba(255, 70, 131)',
+        },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(255, 158, 68)' },
+            { offset: 1, color: 'rgba(255, 70, 131)' }
+          ]),
+        },
+        data: data,
+      }]
+    }
+    
+    myChart.setOption(options);
+  </script>
+</body>
+</html>

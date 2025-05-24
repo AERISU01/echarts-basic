@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="main" style="width: 1000px;height:750px;"></div>
+
+  <script src="./echarts.js"></script>
+  <script>
+    const myChart = echarts.init(document.getElementById('main'));
+    const color = ['#5470c6','#ee6666']
+    const options = {
+      color: color,
+      title: {
+        text: '多x轴坐标',
+        left: 'center',
+        top: '5%',
+      },
+      tooltip: {
+        trigger: 'none',
+        axisPointer: {
+          type: 'cross',
+        }
+      },
+      legend: {},
+      grid: {
+        top: 70,
+        bottom: 50,
+      },
+      xAxis: [
+        {
+          type: 'category',
+          axisTick: {
+            alignWithLabel: true
+          },
+          axisLine: {
+            onZero: false,
+            lineStyle: {
+              color: color[0]
+            }
+          },
+          axisPointer: {
+            label: {
+              formatter: function (params) {
+                return (
+                  'Precipitation ' + 
+                  params.value + 
+                  (params.seriesData.length ? ':' + params.seriesData[0].data : '')
+                )
+              }
+            },
+            data: ['2016-1', '2016-2', '2016-3', '2016-4', '2016-5', '2016-6', '2016-7', '2016-8', '2016-9', '2016-10']
+          }
+        },
+
+        {
+          type: 'category',
+          axisTick: {
+            alignWithLabel: false
+          },
+          axisLine: {
+            onZero: false,
+            lineStyle: {
+              color: color[1]
+            }
+          },
+          axisPointer: {
+            label: {
+              formatter: function (params) {
+                return (
+                  'Temperature ' + 
+                  params.value + 
+                  (params.seriesData.length ? ':' + params.seriesData[0].data : '')
+                )
+              }
+            },
+            data: ['2015-1', '2015-2', '2015-3', '2015-4', '2015-5', '2015-6', '2015-7', '2015-8', '2015-9', '2015-10']
+          }
+        }
+      ],
+      yAxis: { type: 'value'},
+      series: [
+        {
+          name: 'Precipitation[2015]',
+          type: 'line',
+          xAxisIndex: 1,
+          smooth: true,
+          emphasis: {
+            focus: 'series'
+          },
+          data: [2.6, 5.9, 9.0, 13.2, 23.4, 25.6, 76.7, 135.6, 162.2, 32.6]
+        },
+        {
+          name: 'Precipitation[2016]',
+          type: 'line',
+          smooth: true,
+          emphasis: {
+            focus: 'series'
+          },
+          data: [9.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0]
+        },
+      ]
+    }
+    
+    myChart.setOption(options);
+  </script>
+</body>
+</html>

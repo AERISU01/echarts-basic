@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="main" style="width: 1000px;height:750px;"></div>
+
+  <script src="./echarts.js"></script>
+  <script>
+    const myChart = echarts.init(document.getElementById('main'));
+    const options = {
+      title: {
+        text: '折线图堆叠'
+      },
+      tooltip: {
+        trigger: 'item',
+      },
+      legend: {
+        data: ['销量', '销量2', '销量3', '销量4'],
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true,
+            title: '保存为图片',
+            type: 'png',
+            name: '折线图',
+            iconStyle: {
+              normal: {
+                borderColor: '#1e90ff'
+              }
+            }
+          },
+          magicType: {
+            type: ['line', 'bar'],
+            title: {
+              line: '折线图',
+              bar: '柱状图'
+            },
+            iconStyle: {
+              normal: {
+                borderColor: '#1e90ff'
+              }
+            },
+            
+
+
+          },
+        }
+      },
+      xAxis:{
+        type: 'category',
+        data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+        boundaryGap: true,
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series:[
+        {
+          name: '销量',
+          type: 'line',
+          stack: '总量',
+          data: [5, 20, 36, 10, 10, 20],
+          
+        },
+        {
+          name: '销量2',
+          type: 'line',
+          stack: '总量',
+          data: [15, 30, 16, 20, 30, 40],
+        },
+        {
+          name: '销量3',
+          type: 'line',
+          stack: '总量',
+          data: [25, 40, 26, 30, 50, 60],
+        },
+        {
+          name: '销量4',
+          type: 'line',
+          stack: '总量',
+          data: [35, 50, 36, 40, 70, 80],
+        }
+      ]
+
+
+    }
+    
+    myChart.setOption(options);
+  </script>
+</body>
+</html>
