@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="id" style="width: 1000px; height: 750px;"></div>
+</body>
+
+<script src="./echarts.js"></script>
+
+<script>
+  const myChart = echarts.init(document.getElementById('id'));
+  let base = + new Date (2023, 9, 1);
+  let oneDay = 24 * 3600 * 1000;
+  let data = [[base, Math.random() * 300]];
+  for (let i = 1; i < 20000; i++) {
+    let now = new Date(base += oneDay);
+    data.push(
+      [+now, Math.round((Math.random() - 0.5) * 20 + data[i-1][1])]
+    )
+  }
+  const option = {
+    title: {
+      text: '时间轴折线图',
+      left: 'center',
+      top: '5%',
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'line',
+        lineStyle: {
+          color: 'red'
+        },
+        label: {
+          show: true,
+        }
+      },
+      position: function (pt) {
+        return [pt[0], '10%'];
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {
+          title: '保存为图片',
+          type: 'png',
+          name: '时间轴折线图',
+        },
+        restore: {
+          title: '刷新',
+        },
+      }
+    },
+    xAxis: {
+      type: 'time',
+      boundaryGap: false,
+    },
+    yAxis: {
+      type: 'value',
+      boundaryGap: [0, '100%'],
+    },
+    dataZoom: [
+      {
+        type: 'inside',
+        start: 0,
+        end: 20
+      },
+      {
+        type: 'slider',
+        start: 0,
+        end: 20
+      }
+    ],
+    series: [
+      {
+        name: '随机数据',
+        type: 'line',
+        showSymbol: false,
+        hoverAnimation: false,
+        data: data,
+        lineStyle: {
+          color: '#5470c6',
+          width: 1
+        },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: '#5470c6' },
+            { offset: 1, color: '#91cc75' }
+          ])
+        }
+      }
+    ]
+
+  }
+
+  myChart.setOption(option);
+</script>
+
+
+</html>
